@@ -7,7 +7,7 @@ können danach gefiltert werden.
 
 ## Screenshots
 
-![image](https://github.com/timo-js/flutter_to_do/assets/71650238/aeb5801b-8709-4bab-8b69-ddd93b53034e)
-![image](https://github.com/timo-js/flutter_to_do/assets/71650238/336b2868-55ae-4284-a4b2-ac182457de7f)
-![image](https://github.com/timo-js/flutter_to_do/assets/71650238/e7c3ae4a-bb61-46bb-8cb7-5d85a22b2349)
-![image](https://github.com/timo-js/flutter_to_do/assets/71650238/afbd8f7c-5bc3-47ab-ac0a-df01e3994942)
+![image](https://github.com/timo-js/flutter_to_do/assets/71650238/1b604d91-a57f-4c4a-b887-a724f508d4d2)
+![image](https://github.com/timo-js/flutter_to_do/assets/71650238/f4dae97d-ddd3-4dde-bbf5-88fbf0cf775b)
+![image](https://github.com/timo-js/flutter_to_do/assets/71650238/04d165a4-7cc5-4f8b-a0d1-e5cf84e8cbb3)
+![image](https://github.com/timo-js/flutter_to_do/assets/71650238/f6c4a585-b897-48bf-9ab9-53c98db2d9d4)
