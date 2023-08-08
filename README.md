@@ -7,6 +7,6 @@ können danach gefiltert werden.
 
 ## Screenshots
 
-![image](https://github.com/timo-js/flutter_to_do/assets/71650238/1b604d91-a57f-4c4a-b887-a724f508d4d2) ![image](https://github.com/timo-js/flutter_to_do/assets/71650238/f4dae97d-ddd3-4dde-bbf5-88fbf0cf775b)
-![image](https://github.com/timo-js/flutter_to_do/assets/71650238/04d165a4-7cc5-4f8b-a0d1-e5cf84e8cbb3) ![image](https://github.com/timo-js/flutter_to_do/assets/71650238/f6c4a585-b897-48bf-9ab9-53c98db2d9d4)
-![image](https://github.com/timo-js/flutter_to_do/assets/71650238/b1d209b0-6d30-4e71-880d-eb16dfc1243d) ![image](https://github.com/timo-js/flutter_to_do/assets/71650238/712bf1f9-3780-47eb-8cf9-f09f965c3cb6)
+![image](https://github.com/timo-js/flutter_to_do/assets/71650238/81932e3e-35d7-41d6-b55b-8e03a81d52ab) ![image](https://github.com/timo-js/flutter_to_do/assets/71650238/18205183-6e07-44c1-a271-da1d5ca1e60d)
+![image](https://github.com/timo-js/flutter_to_do/assets/71650238/89e06980-8001-48ee-88aa-e1cdcf66fe3f) ![image](https://github.com/timo-js/flutter_to_do/assets/71650238/e32cf600-af4d-4330-bcec-66cbbf71e812)
+![image](https://github.com/timo-js/flutter_to_do/assets/71650238/ba7ebad2-ebf1-43eb-9467-befa9a316f0a)
