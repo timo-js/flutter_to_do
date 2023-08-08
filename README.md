@@ -1,6 +1,6 @@
-# flutter_application_1
+# flutter_to_do
 
-A new Flutter project.
+Eine To-Do App zur Ablage von Aufgaben mit einem bestimmten Datum und der Möglichkeit nach diesem zu filtern.
 
 ## Getting Started
 

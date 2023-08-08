@@ -1,12 +1,13 @@
+// PACKAGES
 import 'package:flutter/material.dart';
-import 'dart:convert';
+import 'package:date_format/date_format.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+// WIDGETS
 import 'task.dart';
 import 'taskItem.dart';
 import 'addTaskForm.dart';
-import 'package:date_format/date_format.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_to_do/utils/task_shared_preferences.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MaterialApp(home: ToDoApp()));
@@ -24,29 +25,7 @@ class _ToDoAppState extends State<ToDoApp> {
     // Task(
     //   id: '01',
     //   creationTimestamp: 1,
-    //   taskText: 'Gehe zur Bank.',
-    //   taskDate: "01.01.2023",
-    // ),
-    // Task(
-    //   id: '02',
-    //   creationTimestamp: 2,
-    //   taskText: 'Hebe Geld ab.',
-    //   taskDate: "01.02.2023",
-    // ),
-    // Task(
-    //   id: '03',
-    //   creationTimestamp: 3,
-    //   taskText: 'Geh zum Geschäft.',
-    // ),
-    // Task(
-    //   id: '04',
-    //   creationTimestamp: 4,
-    //   taskText: 'Kauf Bananen.',
-    // ),
-    // Task(
-    //   id: '05',
-    //   creationTimestamp: 5,
-    //   taskText: 'Iss Bananen.',
+    //   taskText: 'TEST_TASK',
     // ),
   ];
 
@@ -71,6 +50,13 @@ class _ToDoAppState extends State<ToDoApp> {
       return _filteredTasks()
         ..sort((b, a) => a.creationTimestamp.compareTo(b.creationTimestamp));
     }
+  }
+
+  void _handleTaskAdd(Task newTask) {
+    setState(() {
+      _tasks.add(newTask);
+    });
+    safeSharedPreferences();
   }
 
   void _handleTaskChange(Task task) {
@@ -180,47 +166,50 @@ class _ToDoAppState extends State<ToDoApp> {
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
         child: Column(children: [
           Expanded(
-            child: ListView(children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Text(
-                  filterDate != "" ? filterDate : "Alle Aufgaben: ",
-                  style: const TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+            child: ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Text(
+                    filterDate != "" ? filterDate : "Alle Aufgaben: ",
+                    style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
                 ),
-              ),
-              _sortedTasks().isNotEmpty
-                  ? ListView.builder(
-                      physics: const ScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: _sortedTasks().length,
-                      itemBuilder: (context, index) => TaskItem(
-                        task: _sortedTasks()[index],
-                        onDelete: _handleTaskDelete,
-                        onTaskChanged: _handleTaskChange,
+                _sortedTasks().isNotEmpty
+                    ? ListView.builder(
+                        physics: const ScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: _sortedTasks().length,
+                        itemBuilder: (context, index) => TaskItem(
+                          task: _sortedTasks()[index],
+                          onDelete: _handleTaskDelete,
+                          onTaskChanged: _handleTaskChange,
+                        ),
+                      )
+                    : const Center(
+                        heightFactor: 5,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Alles erledigt.',
+                              style:
+                                  TextStyle(fontSize: 36, color: Colors.white),
+                            ),
+                            Icon(
+                              Icons.check,
+                              size: 36,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
                       ),
-                    )
-                  : const Center(
-                      heightFactor: 5,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Alles erledigt.',
-                            style: TextStyle(fontSize: 36, color: Colors.white),
-                          ),
-                          Icon(
-                            Icons.check,
-                            size: 36,
-                            color: Colors.white,
-                          ),
-                        ],
-                      ),
-                    ),
-            ]),
+              ],
+            ),
           ),
         ]),
       ),
@@ -238,9 +227,7 @@ class _ToDoAppState extends State<ToDoApp> {
                     bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: AddTaskForm(
                   onAddedTask: (newTask) {
-                    setState(() {
-                      _tasks.add(newTask);
-                    });
+                    _handleTaskAdd(newTask);
                   },
                 ),
               );
