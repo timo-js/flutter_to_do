@@ -184,14 +184,14 @@ class _ToDoAppState extends State<ToDoApp> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Text(
-                  '${filterDate != "" ? filterDate : "Alle Aufgaben: "}',
+                  filterDate != "" ? filterDate : "Alle Aufgaben: ",
                   style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
                 ),
               ),
-              _sortedTasks().length > 0
+              _sortedTasks().isNotEmpty
                   ? ListView.builder(
                       physics: const ScrollPhysics(),
                       shrinkWrap: true,
