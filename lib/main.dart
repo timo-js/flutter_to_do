@@ -21,13 +21,7 @@ class ToDoApp extends StatefulWidget {
 }
 
 class _ToDoAppState extends State<ToDoApp> {
-  List<Task> _tasks = [
-    // Task(
-    //   id: '01',
-    //   creationTimestamp: 1,
-    //   taskText: 'TEST_TASK',
-    // ),
-  ];
+  List<Task> _tasks = [];
 
   String filterDate = "";
   bool sortAsc = true;
