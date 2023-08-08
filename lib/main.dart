@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'task.dart';
 import 'taskItem.dart';
 import 'addTaskForm.dart';
 import 'package:date_format/date_format.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_to_do/utils/task_shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MaterialApp(home: ToDoApp()));
@@ -17,34 +20,34 @@ class ToDoApp extends StatefulWidget {
 }
 
 class _ToDoAppState extends State<ToDoApp> {
-  final List<Task> _tasks = [
-    Task(
-      id: '01',
-      creationTimestamp: 1,
-      taskText: 'Gehe zur Bank.',
-      taskDate: "01.01.2023",
-    ),
-    Task(
-      id: '02',
-      creationTimestamp: 2,
-      taskText: 'Hebe Geld ab.',
-      taskDate: "01.02.2023",
-    ),
-    Task(
-      id: '03',
-      creationTimestamp: 3,
-      taskText: 'Geh zum Geschäft.',
-    ),
-    Task(
-      id: '04',
-      creationTimestamp: 4,
-      taskText: 'Kauf Bananen.',
-    ),
-    Task(
-      id: '05',
-      creationTimestamp: 5,
-      taskText: 'Iss Bananen.',
-    ),
+  List<Task> _tasks = [
+    // Task(
+    //   id: '01',
+    //   creationTimestamp: 1,
+    //   taskText: 'Gehe zur Bank.',
+    //   taskDate: "01.01.2023",
+    // ),
+    // Task(
+    //   id: '02',
+    //   creationTimestamp: 2,
+    //   taskText: 'Hebe Geld ab.',
+    //   taskDate: "01.02.2023",
+    // ),
+    // Task(
+    //   id: '03',
+    //   creationTimestamp: 3,
+    //   taskText: 'Geh zum Geschäft.',
+    // ),
+    // Task(
+    //   id: '04',
+    //   creationTimestamp: 4,
+    //   taskText: 'Kauf Bananen.',
+    // ),
+    // Task(
+    //   id: '05',
+    //   creationTimestamp: 5,
+    //   taskText: 'Iss Bananen.',
+    // ),
   ];
 
   String filterDate = "";
@@ -74,12 +77,40 @@ class _ToDoAppState extends State<ToDoApp> {
     setState(() {
       task.isDone = !task.isDone;
     });
+    safeSharedPreferences();
   }
 
   void _handleTaskDelete(Task task) {
     setState(() {
       _tasks.removeWhere((element) => element.id == task.id);
     });
+    safeSharedPreferences();
+  }
+
+  void safeSharedPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String encodedData = Task.encode(_tasks);
+
+    await prefs.setString('tasks', encodedData);
+  }
+
+  Future getSharedPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final tasks = (prefs.getString('tasks'));
+
+    if (tasks != null) {
+      setState(() {
+        _tasks = Task.decode(tasks);
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    getSharedPreferences();
   }
 
   @override
@@ -87,10 +118,11 @@ class _ToDoAppState extends State<ToDoApp> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(31, 41, 55, 1),
       appBar: AppBar(
-        title: const Text('Aufgaben'),
+        // title: const Text('Aufgaben-Liste:'),
         backgroundColor: const Color.fromRGBO(28, 28, 28, 1),
         actions: <Widget>[
           IconButton(
+            tooltip: 'Sortiere alt/neu',
             icon: const FaIcon(FontAwesomeIcons.sort),
             onPressed: () {
               setState(() {
@@ -99,6 +131,7 @@ class _ToDoAppState extends State<ToDoApp> {
             },
           ),
           IconButton(
+            tooltip: 'lösche Datumsfilter',
             icon: const FaIcon(FontAwesomeIcons.calendarXmark),
             onPressed: () {
               setState(() {
@@ -107,6 +140,7 @@ class _ToDoAppState extends State<ToDoApp> {
             },
           ),
           IconButton(
+            tooltip: 'wähle Datumsfilter',
             icon: const FaIcon(FontAwesomeIcons.calendarDays),
             color: Colors.white,
             onPressed: () async {
@@ -175,7 +209,7 @@ class _ToDoAppState extends State<ToDoApp> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'Alles erledigt! ',
+                            'Alles erledigt.',
                             style: TextStyle(fontSize: 36, color: Colors.white),
                           ),
                           Icon(
@@ -191,6 +225,7 @@ class _ToDoAppState extends State<ToDoApp> {
         ]),
       ),
       floatingActionButton: FloatingActionButton(
+        tooltip: 'Neue Aufgabe hinzufügen',
         onPressed: () {
           showModalBottomSheet(
             context: context,
